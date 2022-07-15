@@ -1,32 +1,116 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  <v-app>
+
+    <v-navigation-drawer v-model="drawer" app>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="text-h6">
+            CStati Dasboard
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            Bot web-interface
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list
+          nav
+      >
+        <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            :to="item.to"
+            link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar
+        app
+        prominent
+        color="#330b28"
+        dark
+        :src="require('./assets/cstati-logo.png')"
+    >
+<!--        src="https://picsum.photos/1920/1080?random"-->
+      <template v-slot:img="{ props }">
+        <v-img
+            v-bind="props"
+            gradient="to top right, rgba(0,0,0,.5), rgba(51,11,40,.8)"
+        ></v-img>
+      </template>
+
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-app-bar-title>
+        <h2> {{ titleMessage }} </h2>
+      </v-app-bar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <router-view class="ma-4"/>
+    </v-main>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
 
-nav {
-  padding: 30px;
+export default {
+  name: 'App',
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+  data: () => ({
+    drawer: false,
+    items: [
+      { title: 'Таймер судного дня', icon: 'mdi-home', to: '/' },
+      { title: 'Таблица', icon: 'mdi-table-large', to: '/table' },
+      { title: 'Рассылка', icon: 'mdi-send', to: '/broadcast' },
+    ],
+    right: null,
+    phrases: [
+        'Кстати, скоро Посвят \'22',
+        'Кстати, не опоздай на созвон',
+        'Кстати, проверь оплаты :)',
+        'Кстати, проверь оплаты :)',
+        '🤑 🤑 🤑',
+    ],
+    titleMessage: '',
+  }),
+  mounted() {
+    this.titleMessage = this.getRandomPhrase()
+  },
+  methods: {
+    getRandomPhrase() {
+      return this.phrases[Math.floor(Math.random() * this.phrases.length)]
     }
   }
-}
+};
+</script>
+
+<style>
+ .v-app-bar-title__content {
+   width: 500px !important;
+ }
+ body {
+   background-color: rgb(18, 18, 18);
+ }
 </style>
