@@ -82,8 +82,9 @@ export default {
     drawer: false,
     items: [
       { title: 'Таймер судного дня', icon: 'mdi-home', to: '/' },
-      { title: 'Таблица', icon: 'mdi-table-large', to: '/table' },
+      { title: 'Таблица гостей', icon: 'mdi-table-large', to: '/table' },
       { title: 'Рассылка', icon: 'mdi-send', to: '/broadcast' },
+      { title: 'Логи', icon: 'mdi-content-save', to: '/logs' },
     ],
     right: null,
     phrases: [

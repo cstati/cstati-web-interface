@@ -78,7 +78,7 @@
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn
-                  :disabled="!form"
+                  :disabled="!formSingle"
                   class="white--text"
                   color="deep-purple accent-4"
                   depressed

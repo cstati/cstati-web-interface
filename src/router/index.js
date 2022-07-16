@@ -13,18 +13,17 @@ const routes = [
   {
     path: '/table',
     name: 'table',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/TableView.vue')
   },
   {
     path: '/broadcast',
     name: 'broadcast',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/BroadcastView')
+  },
+  {
+    path: '/logs',
+    name: 'logs',
+    component: () => import(/* webpackChunkName: "about" */ '../views/LogsView')
   },
 ]
 
