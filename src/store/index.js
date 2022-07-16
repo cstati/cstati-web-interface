@@ -85,27 +85,27 @@ export default new Vuex.Store({
   },
   actions: {
     async loadGuests({ commit }) {
-      let items = await axios.get('http://localhost:3000/getGuests')
+      let items = await axios.get('http://192.168.1.189:3001/getGuests')
       commit('getGuests', items.data)
     },
     async deleteItem({commit}, index) {
-      await axios.delete(`http://localhost:3000/deleteGuest/${index}`)
+      await axios.delete(`http://192.168.1.189:3001/deleteGuest/${index}`)
       commit('deleteGuest', index)
     },
     async putItem({commit}, item) {
-      await axios.put('http://localhost:3000/editGuest', item)
+      await axios.put('http://192.168.1.189:3001/editGuest', item)
       commit('editGuest', item)
     },
     async postItem({commit}, item) {
-      await axios.post('http://localhost:3000/postGuest', item)
+      await axios.post('http://192.168.1.189:3001/postGuest', item)
       commit('postGuest', item)
     },
     async loadLogs({ commit }) {
-      let items = await axios.get('http://localhost:3000/getLogs')
-      commit('setLogs', items.data)
+      let items = await axios.get('http://192.168.1.189:3001/getLogs')
+      commit('getLogs', items.data)
     },
     async postLog({commit}, log) {
-      await axios.post('http://localhost:3000/postLog', log)
+      await axios.post('http://192.168.1.189:3001/postLog', log)
       commit('postLog', log)
     },
   },

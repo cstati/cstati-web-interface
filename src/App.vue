@@ -40,6 +40,7 @@
         prominent
         color="#330b28"
         dark
+        shrink-on-scroll
         :src="require('./assets/cstati-logo.png')"
     >
 <!--        src="https://picsum.photos/1920/1080?random"-->
@@ -53,7 +54,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-app-bar-title>
-        <h2> {{ titleMessage }} </h2>
+        {{ titleMessage }}
       </v-app-bar-title>
 
       <v-spacer></v-spacer>
@@ -61,14 +62,10 @@
       <v-btn icon>
         <v-icon>mdi-heart</v-icon>
       </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
     </v-app-bar>
 
-    <v-main>
-      <router-view class="ma-4"/>
+    <v-main id="main">
+      <router-view class="ma-4" id="router"/>
     </v-main>
   </v-app>
 </template>
@@ -88,10 +85,9 @@ export default {
     ],
     right: null,
     phrases: [
-        'Кстати, скоро Посвят \'22',
+        'Кстати, скоро Посвят',
         'Кстати, не опоздай на созвон',
-        'Кстати, проверь оплаты :)',
-        'Кстати, проверь оплаты :)',
+        'Кстати, проверь оплаты',
         '🤑 🤑 🤑',
     ],
     titleMessage: '',
@@ -109,7 +105,7 @@ export default {
 
 <style>
  .v-app-bar-title__content {
-   width: 500px !important;
+   width: 100% !important;
  }
  body {
    background-color: rgb(18, 18, 18);

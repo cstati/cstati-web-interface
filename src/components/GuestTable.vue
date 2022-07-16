@@ -240,8 +240,6 @@ export default {
     if (this.$store.getters.getGuests.length == 0) {
       this.$store.dispatch('loadGuests')
     }
-    //await this.$store.dispatch('loadGuests')
-    //this.loading = false
   },
   computed: {
     formTitle () {
@@ -269,8 +267,13 @@ export default {
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
-    deleteItemConfirm () {
-      this.$store.dispatch('deleteItem', this.editedIndex)
+    async deleteItemConfirm () {
+      await this.$store.dispatch('deleteItem', this.editedIndex)
+      await this.$store.dispatch('postLog', {
+        text: 'Объект был удален',
+        icon: ICONS.warning,
+        color: COLORS.warning
+      })
       this.closeDelete()
     },
     close () {
@@ -290,13 +293,28 @@ export default {
     async save () {
       if (this.editedIndex > -1) {
         await this.$store.dispatch('putItem', this.editedItem)
+        await this.$store.dispatch('postLog', {
+          text: 'Объект был обновлен',
+          icon: ICONS.success,
+          color: COLORS.success
+        })
       } else {
         await this.$store.dispatch('postItem', this.editedItem)
+        await this.$store.dispatch('postLog', {
+          text: 'Объект был добавлен',
+          icon: ICONS.success,
+          color: COLORS.success
+        })
       }
       this.close()
     },
     async updateItem(item) {
       await this.$store.dispatch('putItem', item)
+      await this.$store.dispatch('postLog', {
+        text: 'Объект был обновлен',
+        icon: ICONS.success,
+        color: COLORS.success
+      })
     },
   },
   watch: {

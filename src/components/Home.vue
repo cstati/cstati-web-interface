@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container fluid class="mt-16">
-      <v-row align="stretch" justify="center">
+      <v-row align="center" justify="center">
         <v-col>
           <Timer/>
         </v-col>

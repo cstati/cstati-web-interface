@@ -844,9 +844,10 @@ app.get('/getLogs', (req, res) => {
 })
 
 app.post('/postLog', (req, res) => {
-    logs.push(req.body)
+    logs.unshift(req.body)
+    res.send('ok')
 })
 
-http.listen(3000, function () {
+http.listen(3001, '192.168.1.189', function () {
     console.log('listening on 3000')
 })

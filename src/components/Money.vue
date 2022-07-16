@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto mt-2" width="30vw">
+  <v-card class="mx-auto">
     <v-card-title>
       <h2>Всего собрано</h2>
     </v-card-title>

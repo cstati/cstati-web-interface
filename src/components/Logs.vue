@@ -26,7 +26,10 @@
 
 <script>
 export default {
-  name: "Logs"
+  name: "Logs",
+  mounted() {
+    this.$store.dispatch('loadLogs')
+  }
 }
 </script>
 
