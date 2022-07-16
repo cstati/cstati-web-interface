@@ -8,6 +8,8 @@
         loading-text="Загрузка.."
         :items-per-page="15"
         :search="search"
+        :header-props="headerProps"
+        :footer-props="footerProps"
     >
 
       <template v-slot:top>
@@ -213,8 +215,15 @@ export default {
         { text: 'Пол', value: 'sex' },
         { text: 'Цена билета', value: 'room_type' },
         { text: 'Факт оплаты', value: 'payment' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Действия', value: 'actions', sortable: false },
       ],
+      headerProps: {
+        sortByText: 'Сортировать'
+      },
+      footerProps: {
+        itemsPerPageAllText: 'Все',
+        itemsPerPageText: 'Объектов на странице'
+      },
       editedIndex: -1,
       dialogDelete: false,
       dialog: false,

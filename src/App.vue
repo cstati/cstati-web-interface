@@ -76,7 +76,7 @@ export default {
   name: 'App',
 
   data: () => ({
-    drawer: false,
+    drawer: window.innerWidth > 1200,
     items: [
       { title: 'Обзор', icon: 'mdi-home', to: '/' },
       { title: 'Таблица гостей', icon: 'mdi-table-large', to: '/table' },
