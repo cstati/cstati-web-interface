@@ -823,12 +823,28 @@ app.get('/getGuests', (req, res) => {
     res.send(items)
 })
 
+app.post('/postGuest', (req, res) => {
+    console.log(req.body)
+    items.push(req.body)
+    res.send('ok')
+})
+
 app.put('/editGuest', (req, res) => {
     items[items.findIndex(x => x.tgId == req.body.tgId)] = req.body
+    res.send('ok')
+})
+
+app.delete('/deleteGuest/:index', (req, res) => {
+    items.splice(req.params.index, 1)
+    res.send('ok')
 })
 
 app.get('/getLogs', (req, res) => {
     res.send(logs)
+})
+
+app.post('/postLog', (req, res) => {
+    logs.push(req.body)
 })
 
 http.listen(3000, function () {
