@@ -2,10 +2,10 @@
   <div>
     <v-data-table
         :headers="headers"
-        :items="$store.state.guests"
+        :items="$store.getters.getGuests"
         item-key="id"
         class="elevation-1 pt-2"
-        :loading="$store.state.guests.length == 0"
+        :loading="$store.state.guests == null"
         loading-text="Загрузка.."
         :items-per-page="15"
         :search="search"
@@ -122,7 +122,7 @@
                       <v-select
                           :items="['Unknown', 'Man', 'Woman']"
                           v-model="editedItem.gender"
-                          label="Тип комнаты"
+                          label="Пол"
                       ></v-select>
                     </v-col>
                     <v-col
@@ -314,8 +314,8 @@ export default {
     }
   },
   async mounted() {
-    if (this.$store.getters.getGuests.length == 0) {
-      this.$store.dispatch('loadGuests')
+    if (this.$store.getters.getGuests.length === 0) {
+      await this.$store.dispatch('loadGuests')
     }
   },
   computed: {

@@ -5,7 +5,7 @@
     </v-card-title>
 
     <v-progress-linear
-        v-model="eco"
+        :value="eco"
         color="blue-grey"
         height="25"
     >
@@ -17,7 +17,7 @@
     <br>
 
     <v-progress-linear
-        v-model="base"
+        :value="base"
         color="amber"
         height="25"
     >

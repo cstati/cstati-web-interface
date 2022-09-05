@@ -50,6 +50,9 @@ export default {
   }),
   methods: {
     getCollectedMoney(name) {
+      if (this.$store.state.guests == null) {
+        return 0
+      }
       let collected = 0;
       this.$store.state.guests.forEach((item) => {
         if (item.accepter === name && item.isPaid) {
