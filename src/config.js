@@ -1,5 +1,5 @@
-let backend_container = 'localhost:3000'
-let bot_container = 'localhost:3001'
+let backend_container = 'posvyat-backend-master-posvyat-backend-1:3000'
+let bot_container =  'posvyat-backend-master-posvyat-backend-1:3000'
 
 module.exports = {
     backend_container,
