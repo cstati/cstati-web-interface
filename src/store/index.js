@@ -119,7 +119,7 @@ export default new Vuex.Store({
     },
     async sendAccept({commit}, data) {
       console.log({personID: data.target})
-      //await axios.post('http://'+ config.bot_container +'/v1/accept', {personID: data.target})
+      await axios.post('http://'+ config.bot_container +'/v1/accept', {personID: data.target})
     },
   },
   modules: {
