@@ -68,7 +68,7 @@ export default {
     clearInterval(this.interval)
   },
   mounted () {
-    let countDownDate = new Date("Oct 16 2022 00:00:00").getTime();
+    let countDownDate = new Date("Oct 1 2022 00:00:00").getTime();
 
     this.interval = setInterval(() => {
       let now = new Date().getTime();

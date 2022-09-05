@@ -819,23 +819,25 @@ app.all("/*", function(req, res, next){
 
 app.use(express.json())
 
-app.get('/getGuests', (req, res) => {
+app.get('/v1/guests', (req, res) => {
     res.send(items)
 })
 
-app.post('/postGuest', (req, res) => {
+app.post('/v1/guest', (req, res) => {
     console.log(req.body)
     items.push(req.body)
+    res.status(200)
     res.send('ok')
 })
 
-app.put('/editGuest', (req, res) => {
-    items[items.findIndex(x => x.tgId == req.body.tgId)] = req.body
+app.patch('/v1/guest', (req, res) => {
+    items[items.findIndex(x => x.id == req.body.guest.id)] = req.body.guest
+    res.status(200)
     res.send('ok')
 })
 
-app.delete('/deleteGuest/:index', (req, res) => {
-    items.splice(req.params.index, 1)
+app.delete('/v1/guest/:id', (req, res) => {
+    items.splice(items.findIndex(x => x.id == req.params.id), 1)
     res.send('ok')
 })
 
@@ -848,6 +850,6 @@ app.post('/postLog', (req, res) => {
     res.send('ok')
 })
 
-http.listen(3001, '192.168.1.189', function () {
+http.listen(3001, function () {
     console.log('listening on 3000')
 })

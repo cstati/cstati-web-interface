@@ -1,21 +1,30 @@
 <template>
   <v-card class="mx-auto">
     <v-card-title>
-      <h2>Всего собрано</h2>
+      <h2>Всего собрано: {{ $store.getters.getMoney }} рублей</h2>
     </v-card-title>
 
-    <v-sparkline
-        :fill="false"
-        :gradient="['#00c6ff', '#F0F', '#FF0']"
-        :labels="labels"
-        :line-width="2"
-        :padding="16"
-        :smooth="10"
-        :value="$store.getters.getStatistics"
-        auto-draw
-    ></v-sparkline>
+    <v-progress-linear
+        v-model="eco"
+        color="blue-grey"
+        height="25"
+    >
+      <template v-slot:default="{ value }">
+        <strong>Economy: {{ value }}</strong>
+      </template>
+    </v-progress-linear>
 
-    <v-card-text class="text-h6">{{ $store.getters.getMoney }} рублей</v-card-text>
+    <br>
+
+    <v-progress-linear
+        v-model="base"
+        color="amber"
+        height="25"
+    >
+      <template v-slot:default="{ value }">
+        <strong>Base: {{ value }}</strong>
+      </template>
+    </v-progress-linear>
   </v-card>
 </template>
 
@@ -23,8 +32,27 @@
 export default {
   name: "Money",
   data: () => ({
-    labels: ['3500р', ' ', '4500р', ' ', '6000р']
-  })
+    labels: ['Economy', ' ', 'Base'],
+    eco: 0,
+    base: 0,
+  }),
+  async mounted() {
+    await this.$store.dispatch('loadGuests')
+    this.$store.state.guests.forEach((item) => {
+      if (item.isPaid) {
+        switch (item.room) {
+          case 'Economy':
+            this.eco++
+            break
+          case 'Base':
+            this.base++
+            break
+        }
+      }
+    })
+  },
+  methods: {
+  }
 }
 </script>
 

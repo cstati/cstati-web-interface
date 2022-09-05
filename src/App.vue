@@ -43,7 +43,6 @@
         shrink-on-scroll
         :src="require('./assets/cstati-logo.png')"
     >
-<!--        src="https://picsum.photos/1920/1080?random"-->
       <template v-slot:img="{ props }">
         <v-img
             v-bind="props"
@@ -81,7 +80,6 @@ export default {
       { title: 'Обзор', icon: 'mdi-home', to: '/' },
       { title: 'Таблица гостей', icon: 'mdi-table-large', to: '/table' },
       { title: 'Рассылка', icon: 'mdi-send', to: '/broadcast' },
-      { title: 'Логи', icon: 'mdi-content-save', to: '/logs' },
     ],
     right: null,
     phrases: [

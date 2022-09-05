@@ -3,6 +3,7 @@
     <v-data-table
         :headers="headers"
         :items="$store.state.guests"
+        item-key="id"
         class="elevation-1 pt-2"
         :loading="$store.state.guests.length == 0"
         loading-text="Загрузка.."
@@ -59,8 +60,18 @@
                         md="4"
                     >
                       <v-text-field
-                          v-model="editedItem.tgId"
+                          v-model="editedItem.id"
                           label="Id"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-text-field
+                          v-model="editedItem.chatId"
+                          label="chatId"
                       ></v-text-field>
                     </v-col>
                     <v-col
@@ -79,6 +90,26 @@
                         md="4"
                     >
                       <v-text-field
+                          v-model="editedItem.surname"
+                          label="Фамилия"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-text-field
+                          v-model="editedItem.patronymic"
+                          label="Отчество"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-text-field
                           v-model="editedItem.phone"
                           label="Номер телефона"
                       ></v-text-field>
@@ -88,9 +119,20 @@
                         sm="6"
                         md="4"
                     >
+                      <v-select
+                          :items="['Unknown', 'Man', 'Woman']"
+                          v-model="editedItem.gender"
+                          label="Тип комнаты"
+                      ></v-select>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
                       <v-text-field
-                          v-model="editedItem.sex"
-                          label="Пол"
+                          v-model="editedItem.accepter"
+                          label="Принимающий"
                       ></v-text-field>
                     </v-col>
                     <v-col
@@ -99,9 +141,20 @@
                         md="4"
                     >
                       <v-select
-                          :items="[1, 2, 3]"
-                          v-model="editedItem.room_type"
-                          label="Тип билета"
+                          :items="[0, 1, 2]"
+                          v-model="editedItem.waveNumber"
+                          label="Волна"
+                      ></v-select>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-select
+                          :items="['Unknown', 'Economy', 'Base']"
+                          v-model="editedItem.room"
+                          label="Тип комнаты"
                       ></v-select>
                     </v-col>
                     <v-col
@@ -110,7 +163,7 @@
                         md="4"
                     >
                       <v-checkbox
-                        v-model="editedItem.payment"
+                        v-model="editedItem.isPaid"
                         label="Факт оплаты"
                       >
                       </v-checkbox>
@@ -154,16 +207,16 @@
         </v-toolbar>
       </template>
 
-      <template v-slot:item.payment="{ item }">
-        <v-simple-checkbox
-            v-model="item.payment"
-            :ripple="false"
-            v-on:input="updateItem(item)"
-        ></v-simple-checkbox>
+      <template v-slot:item.waveNumber="{ item }">
+        {{item.waveNumber + 1}}
       </template>
 
-      <template v-slot:item.room_type="{ item }">
-        {{ getPrice(item.room_type) }}
+      <template v-slot:item.isPaid="{ item }">
+        <v-simple-checkbox
+            v-model="item.isPaid"
+            :ripple="false"
+            v-on:input="updateItemAccept(item)"
+        ></v-simple-checkbox>
       </template>
 
       <template v-slot:item.actions="{ item }">
@@ -209,12 +262,17 @@ export default {
       search: '',
       loading: true,
       headers: [
-        { text: 'Id', value: 'tgId', align: 'start', width: "20%"},
-        { text: 'Имя', value: 'name', width: "20%"},
+        { text: 'Id', value: 'id', align: 'start'},
+        { text: 'ChatId', value: 'chatId'},
+        { text: 'Фамилия', value: 'surname'},
+        { text: 'Имя', value: 'name'},
+        { text: 'Отчество', value: 'patronymic'},
         { text: 'Номер телефона', value: 'phone' },
-        { text: 'Пол', value: 'sex' },
-        { text: 'Цена билета', value: 'room_type' },
-        { text: 'Факт оплаты', value: 'payment' },
+        { text: 'Пол', value: 'gender' },
+        { text: 'Комната', value: 'room' },
+        { text: 'Волна', value: 'waveNumber' },
+        { text: 'Принимающий', value: 'accepter' },
+        { text: 'Факт оплаты', value: 'isPaid' },
         { text: 'Действия', value: 'actions', sortable: false },
       ],
       headerProps: {
@@ -228,20 +286,30 @@ export default {
       dialogDelete: false,
       dialog: false,
       editedItem: {
-        tgId: 0,
+        id: '',
+        chatId: '',
         name: '',
+        surname: '',
+        patronymic: '',
         phone: '',
-        room_type: 0,
-        sex: '',
-        payment: false
+        room: '',
+        gender: '',
+        accepter: '',
+        isPaid: false,
+        waveNumber: ''
       },
       defaultItem: {
-        tgId: 0,
+        id: '',
+        chatId: '',
         name: '',
+        surname: '',
+        patronymic: '',
         phone: '',
-        room_type: 0,
-        sex: '',
-        payment: false
+        room: '',
+        gender: '',
+        accepter: '',
+        isPaid: false,
+        waveNumber: ''
       }
     }
   },
@@ -277,12 +345,12 @@ export default {
       this.dialogDelete = true
     },
     async deleteItemConfirm () {
-      await this.$store.dispatch('deleteItem', this.editedIndex)
-      await this.$store.dispatch('postLog', {
-        text: 'Объект был удален',
-        icon: ICONS.warning,
-        color: COLORS.warning
-      })
+      await this.$store.dispatch('deleteItem', {item: this.editedItem, index: this.editedIndex})
+      // await this.$store.dispatch('postLog', {
+      //   text: 'Объект был удален',
+      //   icon: ICONS.warning,
+      //   color: COLORS.warning
+      // })
       this.closeDelete()
     },
     close () {
@@ -302,28 +370,34 @@ export default {
     async save () {
       if (this.editedIndex > -1) {
         await this.$store.dispatch('putItem', this.editedItem)
-        await this.$store.dispatch('postLog', {
-          text: 'Объект был обновлен',
-          icon: ICONS.success,
-          color: COLORS.success
-        })
+        // await this.$store.dispatch('postLog', {
+        //   text: 'Объект был обновлен',
+        //   icon: ICONS.success,
+        //   color: COLORS.success
+        // })
       } else {
         await this.$store.dispatch('postItem', this.editedItem)
-        await this.$store.dispatch('postLog', {
-          text: 'Объект был добавлен',
-          icon: ICONS.success,
-          color: COLORS.success
-        })
+        // await this.$store.dispatch('postLog', {
+        //   text: 'Объект был добавлен',
+        //   icon: ICONS.success,
+        //   color: COLORS.success
+        // })
       }
       this.close()
     },
     async updateItem(item) {
       await this.$store.dispatch('putItem', item)
-      await this.$store.dispatch('postLog', {
-        text: 'Объект был обновлен',
-        icon: ICONS.success,
-        color: COLORS.success
-      })
+      // await this.$store.dispatch('postLog', {
+      //   text: 'Объект был обновлен',
+      //   icon: ICONS.success,
+      //   color: COLORS.success
+      // })
+    },
+    async updateItemAccept(item) {
+      await this.$store.dispatch('putItem', item)
+      if (item.isPaid) {
+        await this.$store.dispatch('sendAccept', {target: item.id})
+      }
     },
   },
   watch: {

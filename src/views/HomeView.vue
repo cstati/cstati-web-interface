@@ -10,6 +10,6 @@
 
     components: {
       Home,
-    }
+    },
   }
 </script>

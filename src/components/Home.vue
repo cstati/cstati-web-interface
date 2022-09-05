@@ -5,11 +5,16 @@
         <v-col>
           <Timer/>
         </v-col>
-
+      </v-row>
+      <v-row>
         <v-col>
           <Money/>
         </v-col>
-
+      </v-row>
+      <v-row align="center" justify="center">
+        <v-col>
+          <Collected/>
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -18,9 +23,11 @@
 <script>
 import Money from "@/components/Money";
 import Timer from "@/components/Timer";
+import Collected from "@/components/Collected";
 export default {
   name: "Home",
   components: {
+    Collected,
     Money,
     Timer
   },
@@ -30,7 +37,7 @@ export default {
   },
   async created() {
     if (this.$store.getters.getGuests.length == 0) {
-      this.$store.dispatch('loadGuests')
+      await this.$store.dispatch('loadGuests')
     }
   },
 }

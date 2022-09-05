@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
+import config from "../config";
 
 Vue.use(Vuex)
 
@@ -11,7 +12,8 @@ export default new Vuex.Store({
       icon: 'mdi-info',
       color: 'info'
     }],
-    guests: []
+    guests: [],
+    tickets: []
   },
   getters: {
     getLogs(state) {
@@ -23,19 +25,17 @@ export default new Vuex.Store({
     getMoney(state) {
       let money = 0
       state.guests.forEach((item) => {
-        if (item.payment) {
-          let inc = 0
-          switch (item.room_type) {
-            case 1:
-              inc = 3500
+        if (item.isPaid) {
+          let inc = 0;
+          switch (item.room) {
+            case 'Economy':
+              inc = 3800
               break
-            case 2:
-              inc = 4500
-              break
-            case 3:
-              inc = 6000
+            case 'Base':
+              inc = 4100
               break
           }
+          inc += 200 * item.waveNumber
           money += inc
         }
 
@@ -44,23 +44,27 @@ export default new Vuex.Store({
       return money
     },
     getStatistics(state) {
-      let c1 = 0, c2 = 0, c3 = 0
+      let c1 = 0, c2 = 0, c3 = 0, c4 = 0
       state.guests.forEach((item) => {
-        if (item.payment) {
-          switch (item.room_type) {
-            case 1:
+        if (item.isPaid) {
+          switch (item.room) {
+            case 'Economy':
               c1++
               break
-            case 2:
+            case 'Base':
               c2++
               break
-            case 3:
+            case 'Comfort':
               c3++
+              break
+            case 'Business':
+              c4++
               break
           }
         }
       })
-      return [c1, (c1+c2)/2-3, c2, (c3+c2)/2-3, c3]
+      // return [c1, (c1+c2)/2-2, c2, (c3+c2)/2-2, c3, (c4+c3)/2-2, c4]
+      return [c1, 0, c2]
     }
   },
   mutations: {
@@ -77,36 +81,39 @@ export default new Vuex.Store({
       state.guests.push(item)
     },
     editGuest(state, item) {
-      Object.assign(state.guests[state.guests.findIndex(x=>x.tgId == item.tgId)], item)
+      Object.assign(state.guests[state.guests.findIndex(x=>x.id == item.id)], item)
     },
     deleteGuest(state, index) {
       state.guests.splice(index, 1)
     },
+    getTickets(state, items) {
+      state.tickets = items
+    }
   },
   actions: {
     async loadGuests({ commit }) {
-      let items = await axios.get('http://192.168.1.189:3001/getGuests')
-      commit('getGuests', items.data)
+      let items = await axios.get('http://'+ config.backend_container +'/v1/guests')
+      commit('getGuests', items.data.guests)
     },
-    async deleteItem({commit}, index) {
-      await axios.delete(`http://192.168.1.189:3001/deleteGuest/${index}`)
-      commit('deleteGuest', index)
+    async deleteItem({commit}, data) {
+      await axios.delete('http://'+ config.backend_container +'/v1/guest/' + data.item.id)
+      commit('deleteGuest', data.index)
     },
     async putItem({commit}, item) {
-      await axios.put('http://192.168.1.189:3001/editGuest', item)
+      await axios.patch('http://'+ config.backend_container +'/v1/guest', {guest: item})
       commit('editGuest', item)
     },
     async postItem({commit}, item) {
-      await axios.post('http://192.168.1.189:3001/postGuest', item)
+      await axios.post('http://'+ config.backend_container +'/v1/guest', item)
       commit('postGuest', item)
     },
-    async loadLogs({ commit }) {
-      let items = await axios.get('http://192.168.1.189:3001/getLogs')
-      commit('getLogs', items.data)
+    async sendMessage({commit}, data) {
+      console.log({personId: data.target, message: data.message})
+      await axios.post('http://'+ config.bot_container +'/v1/send', {personId: data.target, message: data.message})
     },
-    async postLog({commit}, log) {
-      await axios.post('http://192.168.1.189:3001/postLog', log)
-      commit('postLog', log)
+    async sendAccept({commit}, data) {
+      console.log({personID: data.target})
+      //await axios.post('http://'+ config.bot_container +'/v1/accept', {personID: data.target})
     },
   },
   modules: {
