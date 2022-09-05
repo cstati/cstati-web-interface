@@ -12,7 +12,7 @@ export default new Vuex.Store({
       icon: 'mdi-info',
       color: 'info'
     }],
-    guests: [],
+    guests: null,
     tickets: []
   },
   getters: {
@@ -20,9 +20,15 @@ export default new Vuex.Store({
       return state.logs
     },
     getGuests(state) {
+      if (state.guests == null) {
+        return []
+      }
       return state.guests
     },
     getMoney(state) {
+      if (state.guests === null) {
+        return 0
+      }
       let money = 0
       state.guests.forEach((item) => {
         if (item.isPaid) {

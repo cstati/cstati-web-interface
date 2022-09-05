@@ -36,7 +36,7 @@ export default {
     }
   },
   async created() {
-    if (this.$store.getters.getGuests.length == 0) {
+    if (this.$store.getters.getGuests == null) {
       await this.$store.dispatch('loadGuests')
     }
   },
