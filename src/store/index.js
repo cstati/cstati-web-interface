@@ -125,7 +125,7 @@ export default new Vuex.Store({
       await axios.post('http://'+ config.bot_container +'/v1/turn/on', data)
     },
     async turnOff({commit}, data) {
-      await axios.post('http://'+ config.bot_container +'/v1/trun/off', {message: data.message})
+      await axios.post('http://'+ config.bot_container +'/v1/turn/off', {message: data.message})
     },
   },
   modules: {
