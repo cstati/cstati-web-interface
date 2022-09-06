@@ -80,6 +80,7 @@ export default {
       { title: 'Обзор', icon: 'mdi-home', to: '/' },
       { title: 'Таблица гостей', icon: 'mdi-table-large', to: '/table' },
       { title: 'Рассылка', icon: 'mdi-send', to: '/broadcast' },
+      { title: 'Управление ботом', icon: 'mdi-play-circle', to: '/bot' },
     ],
     right: null,
     phrases: [

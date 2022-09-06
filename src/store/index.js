@@ -121,6 +121,12 @@ export default new Vuex.Store({
       console.log({personID: data.target})
       await axios.post('http://'+ config.bot_container +'/v1/accept', {personID: data.target})
     },
+    async turnOn({commit}, data) {
+      await axios.post('http://'+ config.bot_container +'/v1/turn/on', data)
+    },
+    async turnOff({commit}, data) {
+      await axios.post('http://'+ config.bot_container +'/v1/trun/off', {message: data.message})
+    },
   },
   modules: {
   }
