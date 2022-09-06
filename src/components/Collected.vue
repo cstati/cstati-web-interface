@@ -56,7 +56,7 @@ export default {
       let collected = 0;
       this.$store.state.guests.forEach((item) => {
         if (item.accepter === name && item.isPaid) {
-          collected += item.cost
+          collected += Number(item.cost)
         }
       })
       return collected
