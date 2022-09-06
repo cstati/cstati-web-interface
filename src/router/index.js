@@ -20,6 +20,11 @@ const routes = [
     name: 'broadcast',
     component: () => import(/* webpackChunkName: "about" */ '../views/BroadcastView')
   },
+  {
+    path: '/bot',
+    name: 'bot',
+    component: () => import(/* webpackChunkName: "about" */ '../views/OnOffView')
+  },
 ]
 
 const router = new VueRouter({
