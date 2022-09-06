@@ -5,6 +5,7 @@
           block
           height="300"
           color="green"
+          @click="turnOn"
       >
         Запустить
       </v-btn>
@@ -14,6 +15,7 @@
           block
           height="300"
           color="red"
+          @click="turnOff"
       >
         Отключить
       </v-btn>

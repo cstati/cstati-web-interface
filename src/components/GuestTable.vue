@@ -168,6 +168,28 @@
                       >
                       </v-checkbox>
                     </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-checkbox
+                          v-model="editedItem.needsTransfer"
+                          label="Трансфер"
+                      >
+                      </v-checkbox>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-checkbox
+                          v-model="editedItem.isFullAge"
+                          label="Есть 18"
+                      >
+                      </v-checkbox>
+                    </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -216,6 +238,18 @@
             v-model="item.isPaid"
             :ripple="false"
             v-on:input="updateItemAccept(item)"
+        ></v-simple-checkbox>
+      </template>
+
+      <template v-slot:item.needsTransfer="{ item }">
+        <v-simple-checkbox
+            :value="item.needsTransfer"
+        ></v-simple-checkbox>
+      </template>
+
+      <template v-slot:item.isFullAge="{ item }">
+        <v-simple-checkbox
+            :value="item.isFullAge"
         ></v-simple-checkbox>
       </template>
 
@@ -281,7 +315,10 @@ export default {
         { text: 'Пол', value: 'gender' },
         { text: 'Комната', value: 'room' },
         { text: 'Волна', value: 'waveNumber' },
+
         { text: 'Принимающий', value: 'accepter' },
+        { text: 'Трансфер', value: 'needsTransfer' },
+        { text: 'Есть 18', value: 'isFullAge' },
         { text: 'Факт оплаты', value: 'isPaid' },
         { text: 'Действия', value: 'actions', sortable: false },
       ],
@@ -307,7 +344,9 @@ export default {
         accepter: '',
         isPaid: false,
         waveNumber: '',
-        isBlacklisted: false
+        needsTransfer: false,
+        isFullAge: false,
+        isBlacklisted: false,
       },
       defaultItem: {
         id: '',
@@ -321,7 +360,9 @@ export default {
         accepter: '',
         isPaid: false,
         waveNumber: '',
-        isBlacklisted: false
+        needsTransfer: false,
+        isFullAge: false,
+        isBlacklisted: false,
       }
     }
   },

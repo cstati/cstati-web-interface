@@ -34,10 +34,10 @@ export default new Vuex.Store({
         if (item.isPaid) {
           let inc = 0;
           switch (item.room) {
-            case 'Economy':
+            case 'Base':
               inc = 3800
               break
-            case 'Base':
+            case 'Comfort':
               inc = 4100
               break
           }
@@ -115,7 +115,7 @@ export default new Vuex.Store({
     },
     async sendMessage({commit}, data) {
       console.log({personsIds: data.target, message: data.message})
-      await axios.post('http://'+ config.bot_container +'/v1/send', {personsIds: data.target, message: { text: data.message, images: []}})
+      await axios.post('http://'+ config.bot_container +'/v1/send', {personsIds: data.target, message: { text: data.message, images: []}, onlyPaid: data.onlyPaid})
     },
     async sendAccept({commit}, data) {
       console.log({personID: data.target})

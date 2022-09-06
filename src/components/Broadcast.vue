@@ -53,6 +53,10 @@
                 Очистить
               </v-btn>
               <v-spacer></v-spacer>
+              <v-checkbox
+                  v-model="onlyPaid"
+                  label="Отправить только оплатившим"
+              ></v-checkbox>
               <v-btn
                   :disabled="!formSingle"
                   class="white--text"
@@ -78,6 +82,7 @@ export default {
     messageSingle: '',
     target: [],
     rules: [v => v != null && v.length <= 4096 && v.length > 0 || 'Мин. 1 символ / Макс. 4096 символа'],
+    onlyPaid: false
   }),
   mounted() {
     if (this.$store.getters.getGuests.length == 0) {
@@ -94,7 +99,7 @@ export default {
       this.target.forEach(item => {
         ids.push(item.id)
       })
-      this.$store.dispatch('sendMessage', {target: ids, message: this.messageSingle})
+      this.$store.dispatch('sendMessage', {target: ids, message: this.messageSingle, onlyPaid: this.onlyPaid})
     }
   }
 }
