@@ -120,7 +120,7 @@
                         md="4"
                     >
                       <v-select
-                          :items="['Unknown', 'Man', 'Woman']"
+                          :items="['Man', 'Woman']"
                           v-model="editedItem.gender"
                           label="Пол"
                       ></v-select>
@@ -152,7 +152,7 @@
                         md="4"
                     >
                       <v-select
-                          :items="['Unknown', 'Economy', 'Base']"
+                          :items="['Base', 'Comfort']"
                           v-model="editedItem.room"
                           label="Тип комнаты"
                       ></v-select>
@@ -226,6 +226,18 @@
             </v-card>
           </v-dialog>
 
+          <v-dialog v-model="dialogPay" max-width="500px">
+            <v-card>
+              <v-card-title class="text-h5">Подтвердить оплату?</v-card-title>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="confirmPayment">Да</v-btn>
+                <v-btn color="blue darken-1" text @click="closeConfirmPayDialog">Отмена</v-btn>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
         </v-toolbar>
       </template>
 
@@ -235,22 +247,24 @@
 
       <template v-slot:item.isPaid="{ item }">
         <v-simple-checkbox
-            v-model="item.isPaid"
+            :value="item.isPaid"
             :ripple="false"
-            v-on:input="updateItemAccept(item)"
+            v-on:input="openConfirmPayDialog(item)"
         ></v-simple-checkbox>
       </template>
 
       <template v-slot:item.needsTransfer="{ item }">
-        <v-simple-checkbox
-            :value="item.needsTransfer"
-        ></v-simple-checkbox>
+        <v-checkbox
+          :v-model="item.needsTransfer"
+          readonly
+        ></v-checkbox>
       </template>
 
       <template v-slot:item.isFullAge="{ item }">
-        <v-simple-checkbox
-            :value="item.isFullAge"
-        ></v-simple-checkbox>
+        <v-checkbox
+            :v-model="item.isFullAge"
+            readonly
+        ></v-checkbox>
       </template>
 
       <template v-slot:item.isBlacklisted="{ item }">
@@ -306,8 +320,8 @@ export default {
       loading: true,
       headers: [
         { text: 'Гандон?', value: 'isBlacklisted', align: 'start'},
+        { text: 'Факт оплаты', value: 'isPaid' },
         { text: 'Id', value: 'id'},
-        { text: 'ChatId', value: 'chatId'},
         { text: 'Фамилия', value: 'surname'},
         { text: 'Имя', value: 'name'},
         { text: 'Отчество', value: 'patronymic'},
@@ -315,11 +329,9 @@ export default {
         { text: 'Пол', value: 'gender' },
         { text: 'Комната', value: 'room' },
         { text: 'Волна', value: 'waveNumber' },
-
         { text: 'Принимающий', value: 'accepter' },
         { text: 'Трансфер', value: 'needsTransfer' },
         { text: 'Есть 18', value: 'isFullAge' },
-        { text: 'Факт оплаты', value: 'isPaid' },
         { text: 'Действия', value: 'actions', sortable: false },
       ],
       headerProps: {
@@ -332,6 +344,7 @@ export default {
       editedIndex: -1,
       dialogDelete: false,
       dialog: false,
+      dialogPay: false,
       editedItem: {
         id: '',
         chatId: '',
@@ -445,6 +458,24 @@ export default {
       //   icon: ICONS.success,
       //   color: COLORS.success
       // })
+    },
+    openConfirmPayDialog(item) {
+      this.editedIndex = this.$store.state.guests.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialogPay = true
+    },
+    closeConfirmPayDialog() {
+      this.dialogPay = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
+    confirmPayment() {
+      this.editedItem.isPaid = true
+      console.log(this.editedItem)
+      this.updateItemAccept(this.editedItem)
+      this.closeConfirmPayDialog()
     },
     async updateItemAccept(item) {
       await this.$store.dispatch('putItem', item)

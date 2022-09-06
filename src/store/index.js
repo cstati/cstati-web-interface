@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
 import config from "../config";
+import guestTable from "@/components/GuestTable";
 
 Vue.use(Vuex)
 
@@ -32,7 +33,7 @@ export default new Vuex.Store({
       let money = 0
       state.guests.forEach((item) => {
         if (item.isPaid) {
-          money += item.cost
+          money += Number(item.cost)
         }
 
       })
@@ -89,6 +90,7 @@ export default new Vuex.Store({
   actions: {
     async loadGuests({ commit }) {
       let items = await axios.get('http://'+ config.backend_container +'/v1/guests')
+      console.log(items.data.guests)
       commit('getGuests', items.data.guests)
     },
     async deleteItem({commit}, data) {
