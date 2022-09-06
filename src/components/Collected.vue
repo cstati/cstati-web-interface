@@ -56,17 +56,7 @@ export default {
       let collected = 0;
       this.$store.state.guests.forEach((item) => {
         if (item.accepter === name && item.isPaid) {
-          let inc = 0;
-          switch (item.room) {
-            case 'Economy':
-              inc = 3800
-              break
-            case 'Base':
-              inc = 4100
-              break
-          }
-          inc += 200 * item.waveNumber
-          collected += inc
+          collected += item.cost
         }
       })
       return collected
