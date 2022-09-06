@@ -248,23 +248,21 @@
       <template v-slot:item.isPaid="{ item }">
         <v-simple-checkbox
             :value="item.isPaid"
-            :ripple="false"
             v-on:input="openConfirmPayDialog(item)"
         ></v-simple-checkbox>
       </template>
 
       <template v-slot:item.needsTransfer="{ item }">
-        <v-checkbox
-          :v-model="item.needsTransfer"
-          readonly
-        ></v-checkbox>
+        <v-simple-checkbox
+          :value="item.needsTransfer"
+
+        ></v-simple-checkbox>
       </template>
 
       <template v-slot:item.isFullAge="{ item }">
-        <v-checkbox
-            :v-model="item.isFullAge"
-            readonly
-        ></v-checkbox>
+        <v-simple-checkbox
+            :value="item.isFullAge"
+        ></v-simple-checkbox>
       </template>
 
       <template v-slot:item.isBlacklisted="{ item }">
