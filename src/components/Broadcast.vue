@@ -57,6 +57,7 @@
                   v-model="onlyPaid"
                   label="Отправить только оплатившим"
               ></v-checkbox>
+              <v-spacer></v-spacer>
               <v-btn
                   :disabled="!formSingle"
                   class="white--text"
