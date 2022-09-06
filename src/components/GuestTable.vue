@@ -120,7 +120,7 @@
                         md="4"
                     >
                       <v-select
-                          :items="['Unknown', 'Man', 'Woman']"
+                          :items="['Man', 'Woman']"
                           v-model="editedItem.gender"
                           label="Пол"
                       ></v-select>
@@ -152,7 +152,7 @@
                         md="4"
                     >
                       <v-select
-                          :items="['Unknown', 'Economy', 'Base']"
+                          :items="['Base', 'Comfort']"
                           v-model="editedItem.room"
                           label="Тип комнаты"
                       ></v-select>
