@@ -10,7 +10,7 @@
         height="25"
     >
       <template v-slot:default="{ value }">
-        <strong>Economy: {{ value }}</strong>
+        <strong>Base: {{ value }}</strong>
       </template>
     </v-progress-linear>
 
@@ -22,7 +22,7 @@
         height="25"
     >
       <template v-slot:default="{ value }">
-        <strong>Base: {{ value }}</strong>
+        <strong>Comfort: {{ value }}</strong>
       </template>
     </v-progress-linear>
   </v-card>
@@ -41,10 +41,10 @@ export default {
     this.$store.state.guests.forEach((item) => {
       if (item.isPaid) {
         switch (item.room) {
-          case 'Economy':
+          case 'Base':
             this.eco++
             break
-          case 'Base':
+          case 'Comfort':
             this.base++
             break
         }
