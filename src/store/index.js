@@ -17,6 +17,9 @@ export default new Vuex.Store({
     tickets: []
   },
   getters: {
+    getTickets(state) {
+      return state.tickets
+    },
     getLogs(state) {
       return state.logs
     },
@@ -121,6 +124,10 @@ export default new Vuex.Store({
     },
     async postTicket({commit}, data) {
       await axios.post('http://'+ config.backend_container +'/v1/prices', {tickets: [data.ticket]})
+    },
+    async getTicket({commit}) {
+      let res = await axios.get('http://'+ config.backend_container +'/v1/prices')
+      commit('getTickets', res.data.tickets)
     },
   },
   modules: {

@@ -2,10 +2,21 @@
   <v-container fluid>
     <v-card class="mx-auto mr-12 mb-2">
       <v-card-title>
-        Сосотояние билетов
+        Состояние билетов
       </v-card-title>
 
+      <v-list>
+        <v-list-item
+          v-for="(item, i) in $store.getters.getTickets"
+          :key="i"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-ticket-confirmation</v-icon>
+          </v-list-item-icon>
 
+          <v-list-item-content>Команта: {{item.room}}<br> Количество: {{item.count}}<br> Стоимость: {{item.price}}р</v-list-item-content>
+        </v-list-item>
+      </v-list>
 
     </v-card>
 
@@ -54,6 +65,9 @@ export default {
     amount: '',
     type: '',
   }),
+  mounted() {
+    this.$store.dispatch('getTicket')
+  },
   methods: {
     postTickets() {
       console.log({ticket: {price: this.cost, room: this.room, count: this.amount}})
