@@ -81,6 +81,7 @@ export default {
       { title: 'Таблица гостей', icon: 'mdi-table-large', to: '/table' },
       { title: 'Рассылка', icon: 'mdi-send', to: '/broadcast' },
       { title: 'Управление ботом', icon: 'mdi-play-circle', to: '/bot' },
+      { title: 'Управление билетами', icon: 'mdi-ticket-confirmation', to: '/tickets' },
     ],
     right: null,
     phrases: [

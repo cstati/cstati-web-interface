@@ -32,17 +32,7 @@ export default new Vuex.Store({
       let money = 0
       state.guests.forEach((item) => {
         if (item.isPaid) {
-          let inc = 0;
-          switch (item.room) {
-            case 'Base':
-              inc = 3800
-              break
-            case 'Comfort':
-              inc = 4100
-              break
-          }
-          inc += 200 * item.waveNumber
-          money += inc
+          money += item.cost
         }
 
       })
@@ -126,6 +116,9 @@ export default new Vuex.Store({
     },
     async turnOff({commit}, data) {
       await axios.post('http://'+ config.bot_container +'/v1/turn/off', {message: data.message})
+    },
+    async postTicket({commit}, data) {
+      await axios.post('http://'+ config.backend_container +'/v1/prices', {tickets: [data.ticket]})
     },
   },
   modules: {

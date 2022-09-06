@@ -25,6 +25,11 @@ const routes = [
     name: 'bot',
     component: () => import(/* webpackChunkName: "about" */ '../views/OnOffView')
   },
+  {
+    path: '/tickets',
+    name: 'tickets',
+    component: () => import(/* webpackChunkName: "about" */ '../views/TicketsView')
+  },
 ]
 
 const router = new VueRouter({
