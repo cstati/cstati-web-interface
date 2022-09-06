@@ -5,24 +5,25 @@
     </v-card-title>
 
     <v-progress-linear
-        :value="eco"
+        :value="eco/192 * 100"
         color="blue-grey"
         height="25"
+
     >
       <template v-slot:default="{ value }">
-        <strong>Base: {{ value }}</strong>
+        <strong>Base: {{ eco }}</strong>
       </template>
     </v-progress-linear>
 
     <br>
 
     <v-progress-linear
-        :value="base"
+        :value="base/156 * 100"
         color="amber"
         height="25"
     >
       <template v-slot:default="{ value }">
-        <strong>Comfort: {{ value }}</strong>
+        <strong>Comfort: {{ base }}</strong>
       </template>
     </v-progress-linear>
   </v-card>
@@ -32,7 +33,6 @@
 export default {
   name: "Money",
   data: () => ({
-    labels: ['Economy', ' ', 'Base'],
     eco: 0,
     base: 0,
   }),

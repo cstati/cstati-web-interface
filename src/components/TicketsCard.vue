@@ -1,6 +1,15 @@
 <template>
   <v-container fluid>
-    <v-card class="mx-auto mr-12">
+    <v-card class="mx-auto mr-12 mb-2">
+      <v-card-title>
+        Сосотояние билетов
+      </v-card-title>
+
+
+
+    </v-card>
+
+    <v-card class="mx-auto mr-12 mt-2">
       <v-card-title>
         Управление билетами
       </v-card-title>
