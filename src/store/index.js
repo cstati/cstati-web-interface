@@ -115,11 +115,11 @@ export default new Vuex.Store({
     },
     async sendMessage({commit}, data) {
       console.log({personId: data.target, message: data.message})
-      await axios.post('http://'+ config.bot_container +'/v1/send', {personId: data.target, message: data.message})
+      await axios.post('http://'+ config.bot_container +'/v1/send', {personIds: data.target, message: { text: data.message, images: []}})
     },
     async sendAccept({commit}, data) {
       console.log({personID: data.target})
-      await axios.post('http://'+ config.bot_container +'/v1/accept', {personID: data.target})
+      await axios.post('http://'+ config.bot_container +'/v1/accept', {profileID: data.target})
     },
     async turnOn({commit}, data) {
       await axios.post('http://'+ config.bot_container +'/v1/turn/on', data)
