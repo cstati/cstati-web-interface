@@ -219,6 +219,15 @@
         ></v-simple-checkbox>
       </template>
 
+      <template v-slot:item.isBlacklisted="{ item }">
+        <v-chip
+            :color="item.isBlacklisted ? 'red' : 'green'"
+            dark
+        >
+          {{ item.isBlacklisted ? 'Гандон' : 'Норм' }}
+        </v-chip>
+      </template>
+
       <template v-slot:item.actions="{ item }">
         <v-icon
             small
@@ -262,7 +271,8 @@ export default {
       search: '',
       loading: true,
       headers: [
-        { text: 'Id', value: 'id', align: 'start'},
+        { text: 'Гандон?', value: 'isBlacklisted', align: 'start'},
+        { text: 'Id', value: 'id'},
         { text: 'ChatId', value: 'chatId'},
         { text: 'Фамилия', value: 'surname'},
         { text: 'Имя', value: 'name'},
@@ -296,7 +306,8 @@ export default {
         gender: '',
         accepter: '',
         isPaid: false,
-        waveNumber: ''
+        waveNumber: '',
+        isBlacklisted: false
       },
       defaultItem: {
         id: '',
@@ -309,7 +320,8 @@ export default {
         gender: '',
         accepter: '',
         isPaid: false,
-        waveNumber: ''
+        waveNumber: '',
+        isBlacklisted: false
       }
     }
   },

@@ -114,8 +114,8 @@ export default new Vuex.Store({
       commit('postGuest', item)
     },
     async sendMessage({commit}, data) {
-      console.log({personId: data.target, message: data.message})
-      await axios.post('http://'+ config.bot_container +'/v1/send', {personIds: data.target, message: { text: data.message, images: []}})
+      console.log({personsIds: data.target, message: data.message})
+      await axios.post('http://'+ config.bot_container +'/v1/send', {personsIds: data.target, message: { text: data.message, images: []}})
     },
     async sendAccept({commit}, data) {
       console.log({personID: data.target})
